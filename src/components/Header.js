@@ -63,26 +63,26 @@ const Header = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          {socials.map(item => (
+          {socials.map((item) => (
             <>
               <nav>
                 {/* Add social media links based on the `socials` data */}
-               
+
                 <HStack>
                   <a href={item.url}>
-                    <FontAwesomeIcon icon={item.icon} size="2x"/>
+                    <FontAwesomeIcon icon={item.icon} size="2x" />
                   </a>
                 </HStack>
               </nav>
-              <nav>
-                <HStack spacing={8}>
-                  {/* Add links to Projects and Contact me section */}
-                  <a href="/#contact-me">Contact Me</a>
-                  <a href="/#project">Projects</a>
-                </HStack>
-              </nav>
             </>
-            ))}  
+          ))}
+          <nav>
+            <HStack spacing={8}>
+              {/* Add links to Projects and Contact me section */}
+              <a href="/#contact-me">Contact Me</a>
+              <a href="/#project">Projects</a>
+            </HStack>
+          </nav>
         </HStack>
       </Box>
     </Box>
