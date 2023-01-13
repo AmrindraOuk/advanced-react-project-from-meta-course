@@ -20,7 +20,7 @@ const LandingSection = () => (
       <Heading as="h1" size="l">
         {greeting}
       </Heading>
-      <Heading as="h3" size="2xl">
+      <Heading as="h3" size="2xl" pt={8}>
         {bio1}
       </Heading>
       <Heading as="h3" size="2xl">
