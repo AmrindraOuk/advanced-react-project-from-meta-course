@@ -28,19 +28,24 @@ const LandingSection = () => {
       type: "",
       comment: "",
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (values, actions) => {
+      console.log(values);
+      console.log(actions);
+
+      actions.resetForm();
     },
-    validationSchema: Yup.object({
+    validationSchema: Yup.object().shape({
       firstName: Yup.string()
         .min(2, "Too Short!")
         .max(50, "Too Long!")
         .required("Required"),
       email: Yup.string().email("Invalid email").required("Required"),
       type: Yup.string().required("Required"),
-      comment: Yup.string().required("Required"),
+      comment: Yup.string().required("Please choose your option!"),
     }),
   });
+
+  // console.log(formik);
 
   return (
     <FullScreenSection
@@ -53,6 +58,7 @@ const LandingSection = () => {
         <Heading as="h1" id="contactme-section">
           Contact me
         </Heading>
+
         <Box p={6} rounded="md" w="100%">
           <form onSubmit={formik.handleSubmit}>
             <VStack spacing={4}>
@@ -63,9 +69,10 @@ const LandingSection = () => {
                 <Input
                   id="firstName"
                   name="firstName"
+                  value={formik.values.firstName}
                   {...formik.getFieldProps("firstName")}
                 />
-                <FormErrorMessage>Required</FormErrorMessage>
+                <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>
               </FormControl>
 
               <FormControl
@@ -76,20 +83,29 @@ const LandingSection = () => {
                   id="email"
                   name="email"
                   type="email"
+                  value={formik.values.email}
                   {...formik.getFieldProps("email")}
                 />
-                <FormErrorMessage>Required</FormErrorMessage>
+                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
               </FormControl>
 
-              <FormControl>
+              <FormControl
+                isInvalid={formik.errors.type && formik.touched.type}
+              >
                 <FormLabel htmlFor="type">Type of enquiry</FormLabel>
-                <Select id="type" name="type" {...formik.getFieldProps("type")}>
+                <Select
+                  id="type"
+                  name="type"
+                  value={formik.values.type}
+                  {...formik.getFieldProps("type")}
+                >
                   <option value="hireMe">Freelance project proposal</option>
                   <option value="openSource">
                     Open source consultancy session
                   </option>
                   <option value="other">Other</option>
                 </Select>
+                <FormErrorMessage>{formik.errors.type}</FormErrorMessage>
               </FormControl>
 
               <FormControl
@@ -100,9 +116,10 @@ const LandingSection = () => {
                   id="comment"
                   name="comment"
                   height={250}
+                  value={formik.values.comment}
                   {...formik.getFieldProps("comment")}
                 />
-                <FormErrorMessage>Required</FormErrorMessage>
+                <FormErrorMessage>{formik.errors.comment}</FormErrorMessage>
               </FormControl>
 
               <Button type="submit" colorScheme="purple" width="full">
