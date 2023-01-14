@@ -29,7 +29,7 @@ const LandingSection = () => {
       comment: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      alert(JSON.stringify(values, null, 2));
     },
     validationSchema: Yup.object({
       firstName: Yup.string()
@@ -56,17 +56,21 @@ const LandingSection = () => {
         <Box p={6} rounded="md" w="100%">
           <form onSubmit={formik.handleSubmit}>
             <VStack spacing={4}>
-              <FormControl isInvalid={false}>
+              <FormControl
+                isInvalid={formik.errors.firstName && formik.touched.firstName}
+              >
                 <FormLabel htmlFor="firstName">Name</FormLabel>
                 <Input
                   id="firstName"
                   name="firstName"
                   {...formik.getFieldProps("firstName")}
                 />
-                <FormErrorMessage></FormErrorMessage>
+                <FormErrorMessage>Required</FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={false}>
+              <FormControl
+                isInvalid={formik.errors.email && formik.touched.email}
+              >
                 <FormLabel htmlFor="email">Email Address</FormLabel>
                 <Input
                   id="email"
@@ -74,7 +78,7 @@ const LandingSection = () => {
                   type="email"
                   {...formik.getFieldProps("email")}
                 />
-                <FormErrorMessage></FormErrorMessage>
+                <FormErrorMessage>Required</FormErrorMessage>
               </FormControl>
 
               <FormControl>
@@ -88,7 +92,9 @@ const LandingSection = () => {
                 </Select>
               </FormControl>
 
-              <FormControl isInvalid={false}>
+              <FormControl
+                isInvalid={formik.errors.comment && formik.touched.comment}
+              >
                 <FormLabel htmlFor="comment">Your message</FormLabel>
                 <Textarea
                   id="comment"
@@ -96,7 +102,7 @@ const LandingSection = () => {
                   height={250}
                   {...formik.getFieldProps("comment")}
                 />
-                <FormErrorMessage></FormErrorMessage>
+                <FormErrorMessage>Required</FormErrorMessage>
               </FormControl>
 
               <Button type="submit" colorScheme="purple" width="full">
