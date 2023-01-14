@@ -22,6 +22,15 @@ const LandingSection = () => {
   const { isLoading, response, submit } = useSubmit();
   const { onOpen } = useAlertContext();
 
+  useEffect(() => {
+    if (response) {
+      onOpen(response.type, response.message);
+      if (response.type === "success") {
+        formik.resetForm();
+      }
+    }
+  }, [response]);
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -29,11 +38,8 @@ const LandingSection = () => {
       type: "",
       comment: "",
     },
-    onSubmit: async (values, actions) => {
-      await submit(values);
-      onOpen(response.type, response.message);
-
-      actions.resetForm();
+    onSubmit: (values) => {
+      submit("https://www.meta.com/", values);
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string()
@@ -130,12 +136,7 @@ const LandingSection = () => {
                 <FormErrorMessage>{formik.errors.comment}</FormErrorMessage>
               </FormControl>
 
-              <Button
-                type="submit"
-                colorScheme="purple"
-                width="full"
-                disabled={formik.isSubmitting}
-              >
+              <Button type="submit" colorScheme="purple" width="full">
                 {isLoading ? <Spinner /> : "Submit"}
               </Button>
             </VStack>
