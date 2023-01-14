@@ -29,10 +29,11 @@ const LandingSection = () => {
       type: "",
       comment: "",
     },
-    onSubmit: (values, actions) => {
-      onOpen(response);
-      submit(values);
-      // actions.resetForm();
+    onSubmit: async (values, actions) => {
+      await submit(values);
+      onOpen(response.type, response.message);
+
+      actions.resetForm();
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string()
@@ -45,6 +46,7 @@ const LandingSection = () => {
     }),
   });
 
+  // console.log(submit(values));
   // console.log(formik);
 
   return (
@@ -132,7 +134,7 @@ const LandingSection = () => {
                 type="submit"
                 colorScheme="purple"
                 width="full"
-                // disabled={formik.isSubmitting}
+                disabled={formik.isSubmitting}
               >
                 {isLoading ? <Spinner /> : "Submit"}
               </Button>
