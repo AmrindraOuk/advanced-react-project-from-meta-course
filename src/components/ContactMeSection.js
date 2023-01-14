@@ -9,6 +9,7 @@ import {
   Heading,
   Input,
   Select,
+  Spinner,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
@@ -29,7 +30,9 @@ const LandingSection = () => {
       comment: "",
     },
     onSubmit: (values, actions) => {
-      actions.resetForm();
+      onOpen(response);
+      submit(values);
+      // actions.resetForm();
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string()
@@ -129,9 +132,9 @@ const LandingSection = () => {
                 type="submit"
                 colorScheme="purple"
                 width="full"
-                disabled={formik.isSubmitting}
+                // disabled={formik.isSubmitting}
               >
-                Submit
+                {isLoading ? <Spinner /> : "Submit"}
               </Button>
             </VStack>
           </form>
