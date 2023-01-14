@@ -29,9 +29,6 @@ const LandingSection = () => {
       comment: "",
     },
     onSubmit: (values, actions) => {
-      console.log(values);
-      console.log(actions);
-
       actions.resetForm();
     },
     validationSchema: Yup.object().shape({
@@ -70,6 +67,9 @@ const LandingSection = () => {
                   id="firstName"
                   name="firstName"
                   value={formik.values.firstName}
+                  isInvalid={
+                    formik.errors.firstName && formik.touched.firstName
+                  }
                   {...formik.getFieldProps("firstName")}
                 />
                 <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>
@@ -84,6 +84,7 @@ const LandingSection = () => {
                   name="email"
                   type="email"
                   value={formik.values.email}
+                  isInvalid={formik.errors.email && formik.touched.email}
                   {...formik.getFieldProps("email")}
                 />
                 <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
@@ -97,6 +98,7 @@ const LandingSection = () => {
                   id="type"
                   name="type"
                   value={formik.values.type}
+                  isInvalid={formik.errors.type && formik.touched.type}
                   {...formik.getFieldProps("type")}
                 >
                   <option value="hireMe">Freelance project proposal</option>
@@ -117,12 +119,18 @@ const LandingSection = () => {
                   name="comment"
                   height={250}
                   value={formik.values.comment}
+                  isInvalid={formik.errors.comment && formik.touched.comment}
                   {...formik.getFieldProps("comment")}
                 />
                 <FormErrorMessage>{formik.errors.comment}</FormErrorMessage>
               </FormControl>
 
-              <Button type="submit" colorScheme="purple" width="full">
+              <Button
+                type="submit"
+                colorScheme="purple"
+                width="full"
+                disabled={formik.isSubmitting}
+              >
                 Submit
               </Button>
             </VStack>
